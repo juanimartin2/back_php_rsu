@@ -1,8 +1,8 @@
 <?php
-$host = "localhost";   // o "localhost"
-$dbname = "prueba";
-$username = "root";    // cambia si tu usuario MySQL es distinto
-$password = "";        // pon tu contraseña si la tienes
+$host = "localhost";
+$dbname = "bd_rsu";
+$username = "root";
+$password = "";
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);

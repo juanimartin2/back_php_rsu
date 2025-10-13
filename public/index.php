@@ -7,7 +7,7 @@ $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 if ($path === "/api/usuarios") {
     try {
-        $stmt = $pdo->query("SELECT id, nombre, email FROM usuarios");
+        $stmt = $pdo->query("SELECT id, nom_usu, cuit_usu FROM usuarios");
         $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
         echo json_encode($usuarios);
     } catch (PDOException $e) {

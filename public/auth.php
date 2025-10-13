@@ -10,33 +10,33 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-if (!isset($data["email"], $data["password"])) {
+$cuit = $data["cuit"];
+$password = $data["password"];
+
+if (!isset($data["cuit"], $data["password"])) {
     http_response_code(400);
     echo json_encode(["error" => "Faltan datos"]);
     exit;
 }
 
-$email = $data["email"];
-$password = $data["password"];
-
 try {
-    $stmt = $pdo->prepare("SELECT id, nombre, email, password FROM usuarios WHERE email = ?");
+    $stmt = $pdo->prepare("SELECT id, nom_usu, cuit_usu, pass_usu FROM usuarios WHERE cuit_usu = ?");
     if ($stmt === false) {
         http_response_code(500);
         echo json_encode(["error" => "Error al preparar la consulta"]);
         exit;
     }
-    $stmt->execute([$email]);
+    $stmt->execute([$cuit]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($user !== false && password_verify($password, $user["password"])) {
+    if ($user !== false && password_verify($password, $user["pass_usu"])) {
         // Usuario válido
         echo json_encode([
             "success" => true,
             "user" => [
                 "id" => $user["id"],
-                "nombre" => $user["nombre"],
-                "email" => $user["email"]
+                "nombre" => $user["nom_usu"],
+                "cuit" => $user["cuit_usu"]
             ]
         ]);
     } else {
