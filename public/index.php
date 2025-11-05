@@ -62,6 +62,11 @@ elseif ($path === "/api/ambitos" && $method === "GET") {
     }
 }
 
+// Endpoint: CRUD de usuarios
+elseif (preg_match('/^\/usuarios/', $path)) {
+    require_once __DIR__ . "/usuarios.php";
+}
+
 // Ruta no encontrada
 else {
     http_response_code(404);
